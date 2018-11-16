@@ -33,7 +33,10 @@ def read_image(image_path):
     return image_array
 
 
-def extractTones(image_array, num_tones):
+def extract_tones(image_array, num_tones):
+    # TODO Sort the colors by the degree of dominance
+    # TODO Output a pictures with tones below
+    # TODO Refactor the project
     codes, dist = scipy.cluster.vq.kmeans(image_array, num_tones)
     vecs, dist = scipy.cluster.vq.vq(image_array, codes)
     counts, bins = scipy.histogram(vecs, len(codes))
@@ -48,7 +51,7 @@ def main():
     image_array = read_image(image_path)
     print(image_array.shape)
     print(image_array[0])
-    extractTones(image_array, 5)
+    extract_tones(image_array, 5)
     pass
 
 
