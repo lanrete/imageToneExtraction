@@ -24,6 +24,7 @@ def read_image(image_path):
     if not os.path.exists(image_path):
         raise ValueError(f'The path does\'nt exist. Please check again. {os.path.abspath(image_path)}')
     image = Image.open(image_path)
+    image = reduce_size(image, 0.25)
     image_array = np.asarray(image)
     shape = image_array.shape
     # This will `unstack` the original array into a linear fashion.
@@ -31,6 +32,13 @@ def read_image(image_path):
     # reshape(x, 3) reshape the current 3d-array from h*w*3 => (h*w)*3
     image_array = image_array.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
     return image_array
+
+
+def reduce_size(image, multiplier):
+    multiplier = min(0.5, multiplier)
+    h, w = image.size[0], image.size[1]
+    new_h, new_w = int(h * multiplier), int(w * multiplier)
+    return image.resize((new_h, new_w), Image.ANTIALIAS)
 
 
 def extract_tones(image_array, num_tones):
