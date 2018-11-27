@@ -43,8 +43,6 @@ def reduce_size(image, multiplier):
 
 def extract_tones(image_array, num_tones):
     # TODO Sort the colors by the degree of dominance
-    # TODO Output a pictures with tones below
-    # TODO Refactor the project
     codes, dist = scipy.cluster.vq.kmeans(image_array, num_tones)
     vecs, dist = scipy.cluster.vq.vq(image_array, codes)
     counts, bins = scipy.histogram(vecs, len(codes))
