@@ -3,7 +3,7 @@
 
 
 import os
-from PIL import Image
+from PIL import Image, ImageDraw
 
 import numpy as np
 import scipy.cluster
@@ -75,25 +75,39 @@ class ImageExtractor(object):
         image_width, image_height = self.image.size[0], self.image.size[1]
 
         width = round(image_width / len(self.tones))
-        height = 100
+        height = width
 
-        tone_image = Image.new('RGB', (image_width, height+image_height))
+        tone_image = Image.new('RGB', (image_width, height + image_height))
         tone_image.paste(self.image, (0, 0))
 
         for ind, each_tone in enumerate(self.tones):
             tone_tuple = (each_tone[0], each_tone[1], each_tone[2])
             temp_image = Image.new('RGB', (width, height), tone_tuple)
             tone_image.paste(temp_image, (width * ind, image_height))
+
+        border_width = 10
+        border_color = self.__get_board_color()
+        draw = ImageDraw.Draw(tone_image)
+        draw.line(xy=((0, image_height), (image_width - 1, image_height)),
+                  fill=border_color,
+                  width=border_width)
+        for ind, _ in enumerate(self.tones[:-1], 1):
+            draw.line(xy=((width * ind, image_height), (width * ind, image_height + height)),
+                      fill=border_color,
+                      width=int(width / 20))
+
         tone_image.show('Tone image')
+
+    def __get_board_color(self):
+        return 'white'
 
 
 def main():
-    image_path = '../data/HongKong.jpg'
+    image_path = '../data/city.jpg'
     image = read_file(image_path)
     image = image.reduce_size(600)
     image = image.unstack_pixel()
     image = image.extract_tones(num=5)
-    image.print_tones()
     image.display_tones()
 
 
