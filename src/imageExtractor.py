@@ -111,14 +111,7 @@ class ImageExtractor(object):
 
 
 def main():
-    image_path = '../data/girlInGrass.jpg'
-    image = read_file(image_path)
-    image = image.reduce_size(600)
-    image = image.unstack_pixel()
-    image = image.extract_tones(num=5)
-    image = image.combine_tones()
-    image = image.add_borders()
-    image.tone_image.show()
+    pass
 
 
 if __name__ == '__main__':
