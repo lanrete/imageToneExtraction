@@ -37,6 +37,7 @@ class ImageExtractor(object):
         self.image_array = None
         self.tones = None
         self.initialized = False
+        self.tone_image = None
         pass
 
     def reduce_size(self, max_width):
@@ -72,7 +73,7 @@ class ImageExtractor(object):
             print(f'Tone {ind}: {each_tone}')
         return
 
-    def display_tones(self):
+    def combine_tones(self):
         image_width, image_height = self.image.size[0], self.image.size[1]
 
         width = round(image_width / len(self.tones))
@@ -85,10 +86,17 @@ class ImageExtractor(object):
             tone_tuple = (each_tone[0], each_tone[1], each_tone[2])
             temp_image = Image.new('RGB', (width, height), tone_tuple)
             tone_image.paste(temp_image, (width * ind, image_height))
+        self.tone_image = tone_image
+        return self
+
+    def add_borders(self):
+        image_width, image_height = self.image.size[0], self.image.size[1]
+        width = round(image_width / len(self.tones))
+        height = width
 
         border_width = 10
         border_color = self.__get_board_color()
-        draw = ImageDraw.Draw(tone_image)
+        draw = ImageDraw.Draw(self.tone_image)
         draw.line(xy=((0, image_height), (image_width - 1, image_height)),
                   fill=border_color,
                   width=border_width)
@@ -96,20 +104,21 @@ class ImageExtractor(object):
             draw.line(xy=((width * ind, image_height), (width * ind, image_height + height)),
                       fill=border_color,
                       width=int(width / 20))
-
-        tone_image.show('Tone image')
+        return self
 
     def __get_board_color(self):
         return 'white'
 
 
 def main():
-    image_path = '../data/person.jpg'
+    image_path = '../data/girlInGrass.jpg'
     image = read_file(image_path)
     image = image.reduce_size(600)
     image = image.unstack_pixel()
     image = image.extract_tones(num=5)
-    image.display_tones()
+    image = image.combine_tones()
+    image = image.add_borders()
+    image.tone_image.show()
 
 
 if __name__ == '__main__':
