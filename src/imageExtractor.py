@@ -42,6 +42,7 @@ class ImageExtractor(object):
     def reduce_size(self, max_width):
         h, w = self.raw_image.size[0], self.raw_image.size[1]
         if w <= max_width:
+            self.image = self.raw_image
             return self
         new_w = int(max_width)
         new_h = int(new_w / w * h)
@@ -103,7 +104,7 @@ class ImageExtractor(object):
 
 
 def main():
-    image_path = '../data/city.jpg'
+    image_path = '../data/person.jpg'
     image = read_file(image_path)
     image = image.reduce_size(600)
     image = image.unstack_pixel()
