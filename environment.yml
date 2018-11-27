@@ -1,0 +1,44 @@
+name: imageToneExtraction
+channels:
+  - defaults
+dependencies:
+  - atomicwrites=1.2.1
+  - attrs=18.2.0
+  - blas=1.0
+  - ca-certificates=2018.03.07
+  - certifi=2018.10.15
+  - freetype=2.9.1
+  - intel-openmp=2019.0
+  - jpeg=9b
+  - libedit=3.1.20170329
+  - libffi=3.2.1
+  - libgcc-ng=8.2.0
+  - libgfortran-ng=7.3.0
+  - libpng=1.6.35
+  - libstdcxx-ng=8.2.0
+  - libtiff=4.0.9
+  - mkl=2019.0
+  - mkl_fft=1.0.6
+  - mkl_random=1.0.1
+  - more-itertools=4.3.0
+  - ncurses=6.1
+  - numpy=1.15.4
+  - numpy-base=1.15.4
+  - olefile=0.46
+  - openssl=1.1.1
+  - pillow=5.3.0
+  - pip=18.1
+  - pluggy=0.8.0
+  - py=1.7.0
+  - pytest=3.10.1
+  - python=3.6.7
+  - readline=7.0
+  - scipy=1.1.0
+  - setuptools=40.5.0
+  - six=1.11.0
+  - sqlite=3.25.3
+  - tk=8.6.8
+  - wheel=0.32.2
+  - xz=5.2.4
+  - zlib=1.2.11
+prefix: /home/user/miniconda3/envs/imageToneExtraction
